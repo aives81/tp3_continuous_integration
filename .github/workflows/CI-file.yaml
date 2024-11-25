@@ -24,8 +24,8 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Start the server
-      run: npm start
+#    - name: Start the server
+#      run: npm start
 
     - name: analyze
       run: npm lint

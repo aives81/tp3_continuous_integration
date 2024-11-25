@@ -1,4 +1,5 @@
 {
+  "name": "tp-ci",
   "private": true,
   "sideEffects": false,
   "type": "module",

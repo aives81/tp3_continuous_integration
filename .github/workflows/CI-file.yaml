@@ -28,7 +28,7 @@ jobs:
 #      run: npm start
 
     - name: analyze
-      run: npm lint
+      run: npm run lint
 
     - name: Run tests
       run: npm tests

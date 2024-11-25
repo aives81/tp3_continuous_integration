@@ -19,22 +19,22 @@ jobs:
           node-version: '22'
 
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: npm install
 
     - name: Build
-      run: yarn build
+      run: npm build
 
     - name: Start the server
-      run: yarn start
+      run: npm start
 
     - name: analyze
-      run: yarn lint
+      run: npm lint
 
     - name: Run tests
-      run: yarn tests
+      run: npm tests
 
     - name: Format code
-      run: yarn format:check
+      run: npm format:check
 
     - name: build docs
       run: mkdocs build

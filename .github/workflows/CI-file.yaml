@@ -19,7 +19,7 @@ jobs:
           node-version: '22'
 
     - name: Install dependencies
-      run: yarn install --immutable false
+      run: yarn install
 
     - name: Build
       run: yarn build

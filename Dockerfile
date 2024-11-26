@@ -3,13 +3,14 @@ FROM node:22
 # Create app directory
 WORKDIR /usr/src/app
 
+# Enable Corepack and prepare Yarn version
+RUN corepack enable
+RUN corepack prepare yarn@4.5.2 --activate
+
 # Install app dependencies
 COPY package*.json yarn.lock ./
 
-# Activer Corepack pour gérer la version de Yarn
-RUN corepack enable && corepack prepare yarn@4.5.2 --activate && yarn install
-
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 # Bundle app source
 COPY . .

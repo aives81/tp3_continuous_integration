@@ -28,7 +28,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn build
 
@@ -42,7 +42,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn lint
 
@@ -56,7 +56,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn test
 
@@ -70,7 +70,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn format:check
 
@@ -84,7 +84,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn build
 

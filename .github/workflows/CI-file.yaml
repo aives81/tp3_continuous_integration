@@ -28,7 +28,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable-cache
 
       - run: yarn build
 
@@ -41,7 +41,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable-cache
 
       - run: yarn lint
 
@@ -54,7 +54,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable-cache
 
       - run: yarn test
 
@@ -67,7 +67,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable-cache
 
       - run: yarn format:check
 
@@ -80,7 +80,7 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable-cache
 
       - run: yarn build
 

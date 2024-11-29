@@ -99,5 +99,6 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
+          echo docker tag $DOCKER_USERNAME/mon_app_remix_js $DOCKER_USERNAME/mon_app_remix_js:latest
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          docker push mon_app_remix_js
+          docker push $DOCKER_USERNAME/mon_app_remix_js:latest

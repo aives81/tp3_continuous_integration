@@ -9,88 +9,78 @@ on:
     branches:
       - main
       - develop
+      - CI-test
   pull_request:
     branches:
       - main
       - develop
+      - CI-test
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    needs:
-      - tests
-      - lint
-      - format
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'yarn'
-
-      - run: yarn install --immutable
-
-      - run: yarn build
-
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'yarn'
-
-      - run: yarn install --immutable
-
+      - run: yarn install --frozen-lockfile
       - run: yarn lint
-
-  tests:
+    
+  test:
     runs-on: ubuntu-latest
+    needs: lint
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'yarn'
-
-      - run: yarn install --immutable
-
+      - run: yarn install --frozen-lockfile
       - run: yarn test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+
+  mkdocs:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.13'
+      - run: pip install mkdocs
+      - run: mkdocs build
 
   format:
     runs-on: ubuntu-latest
+    needs: mkdocs
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'yarn'
-
-      - run: yarn install --immutable
-
+      - run: yarn install --frozen-lockfile
       - run: yarn format:check
-
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'yarn'
-
-      - run: yarn install --immutable
-
-      - run: yarn build
-
-      - name: Build Docker image
-        run: docker image build -t mon_app_remix_js -f Dockerfile .
-
-      - name: Push Docker image
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          docker push my-image

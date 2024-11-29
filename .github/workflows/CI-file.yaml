@@ -17,70 +17,70 @@ on:
       - develop
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22'
-  #         cache: 'yarn'
-  #     - run: yarn install --frozen-lockfile
-  #     - run: yarn lint
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
 
-  # tests:
-  #   runs-on: ubuntu-latest
-  #   needs: lint
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22'
-  #         cache: 'yarn'
-  #     - run: yarn install --immutable
-  #     - run: yarn test
+  tests:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - run: yarn test
   
-  # build:
-  #   runs-on: ubuntu-latest
-  #   needs: tests
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22'
-  #         cache: 'yarn'
-  #     - run: yarn install --frozen-lockfile
-  #     - run: yarn build
+  build:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
   
-  # mkdocs:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.13'
-  #     - run: pip install mkdocs
-  #     - run: mkdocs build
+  mkdocs:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.13'
+      - run: pip install mkdocs
+      - run: mkdocs build
 
-  # format:
-  #   runs-on: ubuntu-latest
-  #   needs: mkdocs
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22'
-  #         cache: 'yarn'
+  format:
+    runs-on: ubuntu-latest
+    needs: mkdocs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
 
-  #     - run: yarn install --frozen-lockfile
-  #     - run: yarn format:write
-  #     - run: yarn format:check
+      - run: yarn install --frozen-lockfile
+      - run: yarn format:write
+      - run: yarn format:check
   
   docker-deploy:
     runs-on: ubuntu-latest
-    # needs: format
+    needs: format
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

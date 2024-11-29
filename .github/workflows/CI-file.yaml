@@ -92,13 +92,12 @@ jobs:
       - run: yarn build
 
       - name: Build Docker image
-        run: docker image build -t mon_app_remix_js -f Dockerfile .
+        run: docker image build -t ${{ secrets.DOCKER_USERNAME }}/mon_app_remix_js:latest -f Dockerfile .
 
       - name: Push Docker image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo docker tag $DOCKER_USERNAME/mon_app_remix_js $DOCKER_USERNAME/mon_app_remix_js:latest
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker push $DOCKER_USERNAME/mon_app_remix_js:latest
